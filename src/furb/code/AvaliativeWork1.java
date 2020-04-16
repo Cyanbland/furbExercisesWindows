@@ -100,8 +100,9 @@ public class AvaliativeWork1 {
 					}
 				}
 				else {
-					biggestNumber = inputValue;
+					biggestNumber = allInputValues.get(0);
 				}
+
 				
 			}
 			//Getting the biggest even number
@@ -238,9 +239,6 @@ public class AvaliativeWork1 {
 				divisibleByThree.add(num);
 			}
 		}
-		return divisibleByThree;
-		
-		
+		return divisibleByThree;	
 	}
-
 }
