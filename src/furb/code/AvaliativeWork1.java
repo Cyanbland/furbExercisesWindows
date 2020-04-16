@@ -92,32 +92,26 @@ public class AvaliativeWork1 {
 			//Getting the biggest number
 			for (int i = 0; i < numberOfInputs; i++) {
 				if (i > 0) {
-					if (allInputValues.get(i) > allInputValues.get(i - 1)) {
+					if (allInputValues.get(i) > biggestNumber) {
 						biggestNumber = allInputValues.get(i);
-					}
-					else {
-						biggestNumber = allInputValues.get(i - 1);
 					}
 				}
 				else {
-					biggestNumber = allInputValues.get(0);
+					biggestNumber = allInputValues.get(i);
 				}
 
-				
+
 			}
 			//Getting the biggest even number
 			for (int i = 0; i < allEvenValues.size(); i++) {
 				if (i > 0) {
-					if (allEvenValues.get(i) > allEvenValues.get(i - 1)) {
+					if (allEvenValues.get(i) > biggestEven) {
 						biggestEven = allEvenValues.get(i);
-					}
-					else {
-						biggestEven = allEvenValues.get(i - 1);
 					}
 				}
 				else {
-					biggestEven = allEvenValues.get(0);
-				}
+					biggestEven = allEvenValues.get(i);
+				}	
 			}
 			
 			//Getting divisible by 5
