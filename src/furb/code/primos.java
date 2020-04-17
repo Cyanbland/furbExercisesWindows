@@ -28,9 +28,11 @@ public class primos {
 			} else {
 				aux = aux -1;
 			}
-		
 		}
-		return (prime);
+		if (number < 2) {
+			prime = false;
+		}
+		return prime;
 
 	}
 }

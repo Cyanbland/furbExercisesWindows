@@ -28,6 +28,7 @@ public class AvaliativeWork1 {
 		
 		boolean numIsEven, numIsPrime;
 		boolean numberRepeatedInARow = false;
+		
 		int inputValue, fatorial;
 		int numberOfInputs = 0;
 		int inputTotalValue = 0;
@@ -39,13 +40,13 @@ public class AvaliativeWork1 {
 		int numberOfDivisibleByFive = 0;
 		int numberOfDivisibleByFiveAndThree = 0;
 		int numberOfTwentyTwos = 0;
+		
 		float totalAverage = 0;
+		
 		ArrayList<Integer> allInputValues = new ArrayList<Integer>();
 		ArrayList<Integer> allEvenValues = new ArrayList<Integer>();
 		ArrayList<Integer> allDivisibleByFive = new ArrayList<Integer>();
 		ArrayList<Integer> allDivisibleByFiveAndThree = new ArrayList<Integer>();
-		
-		
 		
 		input = JOptionPane.showInputDialog("Informe um número: ");
 		inputValue = Integer.parseInt(input);
@@ -202,6 +203,10 @@ public class AvaliativeWork1 {
 			else {
 				aux--;
 			}
+			
+		}
+		if (baseValue < 2) {
+			isPrime = false;
 		}
 		return isPrime;
 		
