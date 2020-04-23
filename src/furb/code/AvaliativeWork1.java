@@ -131,7 +131,6 @@ public class AvaliativeWork1 {
 					}
 				}
 			}
-			System.out.println();
 			
 			
 			input = JOptionPane.showInputDialog("Informe um número: ");
