@@ -66,10 +66,11 @@ public class TwoDimensionalArrayExample {
 	
 	private static void printMatrix(int[][] matrix) {
 	     for (int i=0; i < matricesLines; i++){
-	    	 for (int j=0; j < matricesColumns; j++)
-	    	   System.out.print("\t"+matrix[i][j]);
-	    	System.out.println(); 
+	    	 for (int j=0; j < matricesColumns; j++) {
+		    	   System.out.print("\t"+matrix[i][j]); 
+	    	 }
 	      }
+    	 System.out.println(); 
 	}
 	
 	private static int[][] getMatrixInput(int[][] matrix, String str) {
