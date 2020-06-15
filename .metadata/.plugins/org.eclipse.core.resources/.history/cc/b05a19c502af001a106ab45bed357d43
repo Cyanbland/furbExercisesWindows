@@ -64,7 +64,6 @@ public class MatrixManipulationEx {
 		System.out.println("Somatório dos números da diagonal principal da matriz B: " + sumOfDiagonalB);
 		System.out.println("Somatório dos números da diagonal principal da matriz C: " + sumOfDiagonalC);
 		System.out.println("Somatório dos números da diagonal principal da matriz D: " + sumOfDiagonalD);
-		
 
 	}
 	
