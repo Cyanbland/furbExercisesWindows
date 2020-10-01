@@ -8,6 +8,8 @@ import javax.swing.JComboBox;
 import javax.swing.JButton;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Presentation {
 
@@ -17,9 +19,12 @@ public class Presentation {
 	private JTextField tfIncome;
 	private JTextField tfUF;
 	
-	private Taxpayer[] taxpayerArr = new Taxpayer[100];
+	//private Taxpayer[] taxpayerArr = new Taxpayer[100];
+	private HashMap<String, Taxpayer> hashTaxpayer = new HashMap<>();
+	private ArrayList<Taxpayer> listTaxpayer = new ArrayList<>();
 	private int arrayIndex = 0;
 	private JTextField tfQuery;
+	private JTextField tfCPFConsult;
 
 	/**
 	 * Launch the application.
@@ -49,7 +54,7 @@ public class Presentation {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 450, 300);
+		frame.setBounds(100, 100, 450, 426);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
@@ -96,8 +101,8 @@ public class Presentation {
 				String msg = "O contribuinte " + newTaxpayer.getName() + " pagará de imposto R$" + tax;
 				
 				JOptionPane.showMessageDialog(null, msg);
-				taxpayerArr[arrayIndex] = newTaxpayer;
-				arrayIndex++;
+				hashTaxpayer.put(newTaxpayer.getCpf(), newTaxpayer);
+				listTaxpayer.add(newTaxpayer);
 			}
 		});
 		btnNewButton.setBounds(284, 108, 119, 23);
@@ -123,10 +128,11 @@ public class Presentation {
 			public void actionPerformed(ActionEvent arg0) {
 				double value = Double.parseDouble(tfQuery.getText());
 				String msg = "Contribuintes com imposto acima de R$" + value;
-				for (int i = 0; i < arrayIndex; i++) {
-					double tax = taxpayerArr[i].getTaxToPay();
+				for (int i = 0; i < listTaxpayer.size(); i++) {
+					Taxpayer t = listTaxpayer.get(i);
+					double tax = t.getTaxToPay();
 					if (tax > value) {
-						msg += taxpayerArr[i].getName() + ", CPF " + taxpayerArr[i].getCpf() + " paga R$" + tax;
+						msg += t.getName() + ", CPF " + t.getCpf() + " paga R$" + tax;
 					}
 				}
 				JOptionPane.showMessageDialog(null, msg);
@@ -134,5 +140,65 @@ public class Presentation {
 		});
 		btnNewButton_1.setBounds(284, 199, 119, 23);
 		frame.getContentPane().add(btnNewButton_1);
+		
+		JLabel lblNewLabel_5 = new JLabel("CPF a consultar");
+		lblNewLabel_5.setBounds(10, 266, 92, 14);
+		frame.getContentPane().add(lblNewLabel_5);
+		
+		tfCPFConsult = new JTextField();
+		tfCPFConsult.setBounds(112, 263, 111, 20);
+		frame.getContentPane().add(tfCPFConsult);
+		tfCPFConsult.setColumns(10);
+		
+		JButton btn_ConsultCPF = new JButton("Consultar CPF");
+		btn_ConsultCPF.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Taxpayer t = hashTaxpayer.get(tfCPFConsult.getText());
+				String msg;
+				
+				if (t == null) {
+					msg = "CPF não localizado";
+				}
+				else {
+					msg = "Contribuinte " + t.getName() + " - CPF " + t.getCpf() + " pagará de imposto R$" + t.getTaxToPay();
+				}
+				
+				JOptionPane.showMessageDialog(frame, msg);
+				//janela spawnará em referência a janela frame
+			}
+		});
+		btn_ConsultCPF.setBounds(284, 262, 119, 23);
+		frame.getContentPane().add(btn_ConsultCPF);
+		
+		JButton btnNewButton_2 = new JButton("% dos estados");
+		btnNewButton_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				double totSC, totPR, totRS, totGeneral;
+				totSC = totPR = totRS = totGeneral = 0;
+				
+				for(int i = 0; i < listTaxpayer.size(); i++) {
+					Taxpayer t = listTaxpayer.get(i);
+					double tax = t.getTaxToPay();
+					if (t.getUf().equals("SC")) {
+						totSC += tax;
+					}
+					else if (t.getUf().equals("PR")) {
+						totPR += tax;
+					}
+					else if (t.getUf().equals("RS")) {
+						totRS += tax;
+					}
+				}
+				String msg = "Participação % dos estados\n";
+				msg += "\nSC = " + totSC + " = " + (totSC/totGeneral)*100 + "%";
+				msg += "\nPR = " + totPR + " = " + (totPR/totGeneral)*100 + "%";
+				msg += "\nRS = " + totRS + " = " + (totRS/totGeneral)*100 + "%";
+				msg += "\nGeral = " + totGeneral;
+				
+				JOptionPane.showMessageDialog(frame, msg);
+			}
+		});
+		btnNewButton_2.setBounds(141, 322, 166, 23);
+		frame.getContentPane().add(btnNewButton_2);
 	}
 }
