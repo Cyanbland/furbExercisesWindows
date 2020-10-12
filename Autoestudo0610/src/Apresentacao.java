@@ -250,7 +250,6 @@ public class Apresentacao {
 								DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 								String formattedData = tfDataInstalacao.getText() + "/" + tfDataInstalacao1.getText() + "/" + tfDataInstalacao2.getText();
 								LocalDate data = LocalDate.parse(formattedData, formatter);
-								String numeroTelefone = tfNumeroTelefone.getText();
 								String nomeUsuario = tfNome.getText();
 								Endereco endereco = new Endereco();
 								
@@ -258,82 +257,91 @@ public class Apresentacao {
 								endereco.setCidade(tfCidade.getText());
 								endereco.setUf(comboBoxEstado.getSelectedItem().toString());
 								
-								if (!tfNumeroEndereco.getText().isEmpty()) {
-									try {
-										int nmr = Integer.parseInt(tfNumeroEndereco.getText());
-										endereco.setNumero(nmr);
-									} catch (Exception e) {
-										JOptionPane.showMessageDialog(frame, "Erro no valor inserido em número de endereço");
-									}
-
-								}
-								else {
-									JOptionPane.showMessageDialog(frame, "O número informado no endereço é inválido");
-								}
-
+								String numeroTelefone = tfNumeroTelefone.getText();
 								
-								Cliente cliente = new Cliente();
-								cliente.setEndereco(endereco);
-								cliente.setUsuario(nomeUsuario);
+								try {
+									Long.parseLong(numeroTelefone);
+									if (!tfNumeroEndereco.getText().isEmpty()) {
+										try {
+											int nmr = Integer.parseInt(tfNumeroEndereco.getText());
+											endereco.setNumero(nmr);
+										} catch (Exception e) {
+											JOptionPane.showMessageDialog(frame, "Erro no valor inserido em número de endereço");
+										}
 
-								
-								
-								if (comboBoxLinha.getSelectedItem().equals(opcoesLinha[0])) {
-									//Residencial
-									Residencial telefoneResidencial = new Residencial(cliente, data, numeroTelefone, chckbxConexao.isSelected());
-									if (!telefones.containsKey(numeroTelefone)) {
-										telefones.put(numeroTelefone, telefoneResidencial);
-										JOptionPane.showMessageDialog(frame, "O telefone " + telefoneResidencial.getNumero() + " foi cadastrado.");
 									}
 									else {
-										JOptionPane.showMessageDialog(frame, "Este telefone já está cadastrado");
+										JOptionPane.showMessageDialog(frame, "O número informado no endereço é inválido");
 									}
 
-								}
-								else if (comboBoxLinha.getSelectedItem().equals(opcoesLinha[1])) {
-									//Comercial	
-									String ramoAtividade = tfRamo.getText();
-									Comercial telefoneComercial = new Comercial(cliente, data, numeroTelefone, ramoAtividade);
-
-									if (!telefones.containsKey(numeroTelefone)) {
-										telefones.put(numeroTelefone, telefoneComercial);
-										JOptionPane.showMessageDialog(frame, "O telefone " + telefoneComercial.getNumero() + " foi cadastrado.");
-									}
-									else {
-										JOptionPane.showMessageDialog(frame, "Este telefone já está cadastrado");
-									}
 									
-								}
-								else if (comboBoxLinha.getSelectedItem().equals(opcoesLinha[2])) {
-									//Especializada
-									try {
-										if (!tfQtdOcorrencias.getText().isEmpty()) {
-											try {
-												int qtdOcor = Integer.parseInt(tfQtdOcorrencias.getText());
-												Especializada telefoneEspecializada = new Especializada(cliente, data, numeroTelefone, qtdOcor);
+									Cliente cliente = new Cliente();
+									cliente.setEndereco(endereco);
+									cliente.setUsuario(nomeUsuario);
 
-												if (!telefones.containsKey(numeroTelefone)) {
-													telefones.put(numeroTelefone, telefoneEspecializada);
-													JOptionPane.showMessageDialog(frame, "O telefone " + telefoneEspecializada.getNumero() + " foi cadastrado.");
-												}
-												else {
-													JOptionPane.showMessageDialog(frame, "Este telefone já está cadastrado");
-												}
-											} catch (Exception e) {
-												JOptionPane.showMessageDialog(frame, "Informe um número em quantidade de ocorrências");
-											}
-											
+									
+									
+									if (comboBoxLinha.getSelectedItem().equals(opcoesLinha[0])) {
+										//Residencial
+										Residencial telefoneResidencial = new Residencial(cliente, data, numeroTelefone, chckbxConexao.isSelected());
+										if (!telefones.containsKey(numeroTelefone)) {
+											telefones.put(numeroTelefone, telefoneResidencial);
+											JOptionPane.showMessageDialog(frame, "O telefone " + telefoneResidencial.getNumero() + " foi cadastrado.");
 										}
 										else {
-											JOptionPane.showMessageDialog(frame, "Informe um valor em quantidade de ocorrências");
+											JOptionPane.showMessageDialog(frame, "Este telefone já está cadastrado");
 										}
 
-									} catch (IllegalArgumentException e) {
-										//JOptionPane.showMessageDialog(frame, "Erro no valor inserido em quantidade de ocorrências");
-										JOptionPane.showMessageDialog(frame, e.getMessage());
 									}
-								}
+									else if (comboBoxLinha.getSelectedItem().equals(opcoesLinha[1])) {
+										//Comercial	
+										String ramoAtividade = tfRamo.getText();
+										Comercial telefoneComercial = new Comercial(cliente, data, numeroTelefone, ramoAtividade);
+
+										if (!telefones.containsKey(numeroTelefone)) {
+											telefones.put(numeroTelefone, telefoneComercial);
+											JOptionPane.showMessageDialog(frame, "O telefone " + telefoneComercial.getNumero() + " foi cadastrado.");
+										}
+										else {
+											JOptionPane.showMessageDialog(frame, "Este telefone já está cadastrado");
+										}
+										
+									}
+									else if (comboBoxLinha.getSelectedItem().equals(opcoesLinha[2])) {
+										//Especializada
+										try {
+											if (!tfQtdOcorrencias.getText().isEmpty()) {
+												try {
+													int qtdOcor = Integer.parseInt(tfQtdOcorrencias.getText());
+													Especializada telefoneEspecializada = new Especializada(cliente, data, numeroTelefone, qtdOcor);
+
+													if (!telefones.containsKey(numeroTelefone)) {
+														telefones.put(numeroTelefone, telefoneEspecializada);
+														JOptionPane.showMessageDialog(frame, "O telefone " + telefoneEspecializada.getNumero() + " foi cadastrado.");
+													}
+													else {
+														JOptionPane.showMessageDialog(frame, "Este telefone já está cadastrado");
+													}
+												} catch (Exception e) {
+													JOptionPane.showMessageDialog(frame, "Informe um número em quantidade de ocorrências");
+												}
+												
+											}
+											else {
+												JOptionPane.showMessageDialog(frame, "Informe um valor em quantidade de ocorrências");
+											}
+
+										} catch (IllegalArgumentException e) {
+											//JOptionPane.showMessageDialog(frame, "Erro no valor inserido em quantidade de ocorrências");
+											JOptionPane.showMessageDialog(frame, e.getMessage());
+										}
+									}
+										
 									
+								} catch (Exception e) {
+									JOptionPane.showMessageDialog(frame, "Erro no número de telefone inserido");
+								}
+								
 								
 
 							} catch (IllegalArgumentException iae) {

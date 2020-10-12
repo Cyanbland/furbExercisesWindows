@@ -55,8 +55,8 @@ public class Telefone {
 		if (numero.length() == 10) {
 
 			this.numero = numero;
-
 		}
+
 
 		else {
 
