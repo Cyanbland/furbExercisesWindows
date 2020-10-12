@@ -1,39 +1,46 @@
-public class Cliente {
+//João Vitor de Oliveira, Natália Sens Weise, Paulo Rubens de Moraes Leme Júnior
+public class Cliente 
+{
 	private String usuario;
 	private Endereco endereco;
-	private Telefone telefone;
-
-	public Cliente(String usuario, Endereco endereco, Telefone telefone) {
+	
+	
+	public Cliente(String usuario, Endereco endereco) throws IllegalArgumentException
+	{
 		this.setUsuario(usuario);
 		this.setEndereco(endereco);
-		this.setTelefone(telefone);
 	}
 
-	public Cliente() {
-	}
-
-	public String getUsuario() {
+	public Cliente() {}
+	
+	public String getUsuario()
+	{
 		return this.usuario;
 	}
-
-	public void setUsuario(String usuario) {
+	
+	public void setUsuario(String usuario) throws IllegalArgumentException
+	{
+		if (usuario == null)
+			throw new IllegalArgumentException("Usuário nulo");
+		
+		if (usuario.equals(""))
+			throw new IllegalArgumentException("Usuário vazio");
+		
 		this.usuario = usuario;
 	}
-
-	public Endereco getEndereco() {
+	
+	public Endereco getEndereco()
+	{
 		return this.endereco;
 	}
-
-	public void setEndereco(Endereco endereco) {
+	
+	public void setEndereco(Endereco endereco) throws IllegalArgumentException
+	{
+		if (endereco == null)
+			throw new IllegalArgumentException("Endereco nulo");
+		
 		this.endereco = endereco;
 	}
-
-	public Telefone getTelefone() {
-		return this.telefone;
-	}
-
-	public void setTelefone(Telefone telefone) {
-		this.telefone = telefone;
-	}
-
+	
+	
 }

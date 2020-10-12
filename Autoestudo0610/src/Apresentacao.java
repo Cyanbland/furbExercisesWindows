@@ -1,3 +1,5 @@
+//João Vitor de Oliveira, Natália Sens Weise e Paulo Rubens de Moraes Leme Júnior
+
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -8,6 +10,7 @@ import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.text.DateFormatter;
 import javax.swing.JComboBox;
+import javax.swing.JFormattedTextField;
 import javax.swing.JCheckBox;
 import javax.swing.JSeparator;
 import javax.swing.JButton;
@@ -42,6 +45,8 @@ public class Apresentacao {
 	private JLabel lblQtdOcorrencias;
 	
 	private HashMap<String, Telefone> telefones = new HashMap<>(); 
+	private JTextField tfDataInstalacao1;
+	private JTextField tfDataInstalacao2;
 
 	/**
 	 * Launch the application.
@@ -145,15 +150,15 @@ public class Apresentacao {
 		tfNumeroTelefone.setBounds(168, 123, 86, 20);
 		frame.getContentPane().add(tfNumeroTelefone);
 		
-		JLabel lblNewLabel_1_1_2 = new JLabel("Data da Instala\u00E7\u00E3o");
+		JLabel lblNewLabel_1_1_2 = new JLabel("Data da instala\u00E7\u00E3o");
 		lblNewLabel_1_1_2.setFont(new Font("Dialog", Font.PLAIN, 15));
 		lblNewLabel_1_1_2.setBounds(32, 169, 127, 20);
 		frame.getContentPane().add(lblNewLabel_1_1_2);
 		
-		tfDataInstalacao = new JTextField();
-		tfDataInstalacao.setBounds(168, 171, 86, 20);
+		tfDataInstalacao = new JFormattedTextField();
+		tfDataInstalacao.setBounds(168, 171, 22, 20);
 		frame.getContentPane().add(tfDataInstalacao);
-		tfDataInstalacao.setColumns(10);
+		tfDataInstalacao.setColumns(2);
 		
 		
 		
@@ -234,33 +239,117 @@ public class Apresentacao {
 		btnCadastrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
-					DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-					LocalDate data = LocalDate.parse(tfDataInstalacao.getText(), formatter);
-					String numeroTelefone = tfNumeroTelefone.getText();
-					
-					if (comboBoxLinha.getSelectedItem().equals(opcoesLinha[0])) {
-						//Residencial
-						Residencial telefoneResidencial = new Residencial(data, numeroTelefone, chckbxConexao.isSelected());
-						telefones.put(numeroTelefone, telefoneResidencial);
-					}
-					else if (comboBoxLinha.getSelectedItem().equals(opcoesLinha[1])) {
-						//Comercial	
-						String ramoAtividade = tfRamo.getText();
-						Comercial telefoneComercial = new Comercial(data, numeroTelefone, ramoAtividade);
-						telefones.put(numeroTelefone, telefoneComercial);
+					int day = Integer.parseInt(tfDataInstalacao.getText());
+					int month = Integer.parseInt(tfDataInstalacao1.getText());
+					int year = Integer.parseInt(tfDataInstalacao2.getText());
+					if (day <= 31 && month <= 12 && year <= 2100 && year >= 1900) {
+						//Data validada
+						if (comboBoxLinha.getSelectedIndex() > -1) {
+							try {
+								//Tipo de linah validado
+								DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+								String formattedData = tfDataInstalacao.getText() + "/" + tfDataInstalacao1.getText() + "/" + tfDataInstalacao2.getText();
+								LocalDate data = LocalDate.parse(formattedData, formatter);
+								String numeroTelefone = tfNumeroTelefone.getText();
+								String nomeUsuario = tfNome.getText();
+								Endereco endereco = new Endereco();
+								
+								endereco.setRua(tfRua.getText());
+								endereco.setCidade(tfCidade.getText());
+								endereco.setUf(comboBoxEstado.getSelectedItem().toString());
+								
+								if (!tfNumeroEndereco.getText().isEmpty()) {
+									try {
+										int nmr = Integer.parseInt(tfNumeroEndereco.getText());
+										endereco.setNumero(nmr);
+									} catch (Exception e) {
+										JOptionPane.showMessageDialog(frame, "Erro no valor inserido em número de endereço");
+									}
 
+								}
+								else {
+									JOptionPane.showMessageDialog(frame, "O número informado no endereço é inválido");
+								}
+
+								
+								Cliente cliente = new Cliente();
+								cliente.setEndereco(endereco);
+								cliente.setUsuario(nomeUsuario);
+								
+								
+								if (comboBoxLinha.getSelectedItem().equals(opcoesLinha[0])) {
+									//Residencial
+									Residencial telefoneResidencial = new Residencial(cliente, data, numeroTelefone, chckbxConexao.isSelected());
+									if (!telefones.containsKey(numeroTelefone)) {
+										telefones.put(numeroTelefone, telefoneResidencial);
+										JOptionPane.showMessageDialog(frame, "O telefone " + telefoneResidencial.getNumero() + " foi cadastrado.");
+									}
+									else {
+										JOptionPane.showMessageDialog(frame, "Este telefone já está cadastrado");
+									}
+
+								}
+								else if (comboBoxLinha.getSelectedItem().equals(opcoesLinha[1])) {
+									//Comercial	
+									String ramoAtividade = tfRamo.getText();
+									Comercial telefoneComercial = new Comercial(cliente, data, numeroTelefone, ramoAtividade);
+
+									if (!telefones.containsKey(numeroTelefone)) {
+										telefones.put(numeroTelefone, telefoneComercial);
+										JOptionPane.showMessageDialog(frame, "O telefone " + telefoneComercial.getNumero() + " foi cadastrado.");
+									}
+									else {
+										JOptionPane.showMessageDialog(frame, "Este telefone já está cadastrado");
+									}
+									
+								}
+								else if (comboBoxLinha.getSelectedItem().equals(opcoesLinha[2])) {
+									//Especializada
+									try {
+										if (!tfQtdOcorrencias.getText().isEmpty()) {
+											try {
+												int qtdOcor = Integer.parseInt(tfQtdOcorrencias.getText());
+												Especializada telefoneEspecializada = new Especializada(cliente, data, numeroTelefone, qtdOcor);
+
+												if (!telefones.containsKey(numeroTelefone)) {
+													telefones.put(numeroTelefone, telefoneEspecializada);
+													JOptionPane.showMessageDialog(frame, "O telefone " + telefoneEspecializada.getNumero() + " foi cadastrado.");
+												}
+												else {
+													JOptionPane.showMessageDialog(frame, "Este telefone já está cadastrado");
+												}
+											} catch (Exception e) {
+												JOptionPane.showMessageDialog(frame, "Informe um número em quantidade de ocorrências");
+											}
+											
+										}
+										else {
+											JOptionPane.showMessageDialog(frame, "Informe um valor em quantidade de ocorrências");
+										}
+
+									} catch (IllegalArgumentException e) {
+										//JOptionPane.showMessageDialog(frame, "Erro no valor inserido em quantidade de ocorrências");
+										JOptionPane.showMessageDialog(frame, e.getMessage());
+									}
+								}
+									
+								
+
+							} catch (IllegalArgumentException iae) {
+								JOptionPane.showMessageDialog(frame, iae.getMessage());
+							}
+						}
+						else {
+							JOptionPane.showMessageDialog(frame, "Selecione um tipo de linha");
+						}
 					}
-					else if (comboBoxLinha.getSelectedItem().equals(opcoesLinha[2])) {
-						//Especializada
-						int qtdOcor = Integer.parseInt(tfQtdOcorrencias.getText());
-						Especializada telefoneEspecializada = new Especializada(data, numeroTelefone, qtdOcor);
-						telefones.put(numeroTelefone, telefoneEspecializada);
+					else {
+						JOptionPane.showMessageDialog(frame, "Erro na data inserida");
 					}
-					
-					
-				} catch(IllegalArgumentException iae) {
-					JOptionPane.showMessageDialog(frame, iae.getMessage());
+				} catch (Exception e) {
+					JOptionPane.showMessageDialog(frame, "Erro na data inserida");
 				}
+				
 				
 			}
 		});
@@ -268,6 +357,27 @@ public class Apresentacao {
 		frame.getContentPane().add(btnCadastrar);
 		
 		JButton btnConsultar = new JButton("Consultar");
+		btnConsultar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if (!tfConsulta.getText().isEmpty() || tfConsulta.getText().length() != 10 && tfConsulta.getText().length() != 0) {
+					String numeroConsulta = tfConsulta.getText();
+					Telefone telefoneConsultado;
+					if (telefones.containsKey(numeroConsulta)) {
+						telefoneConsultado = telefones.get(numeroConsulta);
+						JOptionPane.showMessageDialog(frame, telefoneConsultado.toString());
+					}
+					else {
+						JOptionPane.showMessageDialog(frame, "O telefone informado não foi encontrado");
+					}
+
+				}
+				else {
+					JOptionPane.showMessageDialog(frame, "Erro no valor inserido para consulta");
+				}
+				
+
+			}
+		});
 		btnConsultar.setBounds(460, 582, 89, 23);
 		frame.getContentPane().add(btnConsultar);
 		
@@ -277,6 +387,20 @@ public class Apresentacao {
 		frame.getContentPane().add(lblVerificarPotencialFaturamento);
 		
 		JButton btnVerificar = new JButton("Verificar");
+		btnVerificar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String msg = "A soma dos custos fixos de todos os telefones cadastrados é: R$";
+				double faturamento = 0;
+				
+				for (Telefone tel : telefones.values()) {
+					faturamento += tel.getCustoMensal();
+				}
+				
+				msg += faturamento;
+				
+				JOptionPane.showMessageDialog(frame, msg);
+			}
+		});
 		btnVerificar.setBounds(382, 723, 133, 30);
 		frame.getContentPane().add(btnVerificar);
 		
@@ -303,6 +427,36 @@ public class Apresentacao {
 		tfQtdOcorrencias.setColumns(10);
 		tfQtdOcorrencias.setBounds(222, 354, 86, 20);
 		frame.getContentPane().add(tfQtdOcorrencias);
+		
+		tfDataInstalacao1 = new JFormattedTextField();
+		tfDataInstalacao1.setColumns(2);
+		tfDataInstalacao1.setBounds(200, 171, 22, 20);
+		frame.getContentPane().add(tfDataInstalacao1);
+		
+		tfDataInstalacao2 = new JFormattedTextField();
+		tfDataInstalacao2.setColumns(2);
+		tfDataInstalacao2.setBounds(232, 171, 32, 20);
+		frame.getContentPane().add(tfDataInstalacao2);
+		
+		JLabel lblNewLabel_2 = new JLabel("/");
+		lblNewLabel_2.setBounds(193, 173, 13, 14);
+		frame.getContentPane().add(lblNewLabel_2);
+		
+		JLabel lblNewLabel_2_1 = new JLabel("/");
+		lblNewLabel_2_1.setBounds(224, 174, 40, 14);
+		frame.getContentPane().add(lblNewLabel_2_1);
+		
+		JLabel lblNewLabel_3 = new JLabel("Desenvolvido por Jo\u00E3o Vitor de Oliveira, Nat\u00E1lia");
+		lblNewLabel_3.setBounds(602, 822, 303, 14);
+		frame.getContentPane().add(lblNewLabel_3);
+		
+		JLabel lblNewLabel_4 = new JLabel("Sens Weise e Paulo Rubens de Moraes Leme J\u00FAnior");
+		lblNewLabel_4.setBounds(602, 835, 303, 14);
+		frame.getContentPane().add(lblNewLabel_4);
+		
+		JLabel lblNewLabel_5 = new JLabel("BCC FURB 2020");
+		lblNewLabel_5.setBounds(602, 847, 303, 14);
+		frame.getContentPane().add(lblNewLabel_5);
 		
 
 	}

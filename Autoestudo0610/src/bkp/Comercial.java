@@ -1,4 +1,5 @@
-//João Vitor de Oliveira, Natália Sens Weise, Paulo Rubens de Moraes Leme Júnior
+//João Vitor de Oliveira, Natália Sens Weise e Paulo Rubens de Moraes Leme Júnior
+
 import java.time.LocalDate;
 
 import java.time.format.DateTimeFormatter;
@@ -24,9 +25,7 @@ public class Comercial extends Telefone {
 	}
 
 	public void setServico(String servico) {
-		if (servico.isEmpty()) {
-			throw new IllegalArgumentException("Informe um ramo de atividade");
-		}
+
 		this.servico = servico;
 
 	}
