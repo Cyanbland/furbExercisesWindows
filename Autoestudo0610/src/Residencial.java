@@ -1,48 +1,59 @@
+
 //João Vitor de Oliveira, Natália Sens Weise, Paulo Rubens de Moraes Leme Júnior
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
+public class Residencial extends Telefone {
 
+	private boolean conexInt;
 
-public class Residencial extends Telefone{
+	public Residencial(Cliente cliente, LocalDate data, String num, boolean conexInt) {
 
+		super(cliente, data, num);
 
+		this.setConexInt(conexInt);
 
-private boolean conexInt;
+	}
 
+	public boolean isConexInt() {
 
- public Residencial(Cliente cliente, LocalDate data, String num, boolean conexInt) {
+		return conexInt;
 
- super(cliente, data, num);
+	}
 
- this.setConexInt(conexInt);
+	public void setConexInt(boolean conexInt) {
 
- }
+		this.conexInt = conexInt;
 
+	}
+	
 
+	@Override
 
-public boolean isConexInt() {
+	public float getCustoMensal() {
 
- return conexInt;
+		return 15f;
 
- }
-
-
-
-public void setConexInt(boolean conexInt) {
+	}
+	
+	@Override
+	public String toString() {
+		Endereco endereco = getCliente().getEndereco();
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 		
- this.conexInt = conexInt;
+		String conexaoStr = "";
+		if (conexInt) {
+			conexaoStr += "Sim";
+		}
+		else {
+			conexaoStr += "Não";
+		}
+		String str = "Linha Residencial\nNúmero de Telefone: " + getNumero() + "\nData de Instalação: " + 
+				getDataInst().format(formatter) + "\nConexão com Internet: " + conexaoStr + 
+				"\nCusto mensal: R$" + getCustoMensal() + "\nNome do usuário: " + getCliente().getUsuario() + "\nEndereço: " + 
+				endereco.getRua() + ", " + endereco.getNumero() + " - " +
+				endereco.getCidade() + ", " + endereco.getUf();
+		return str;
+	}
 
- }
-
-
-
-@Override
-
- public float getCustoMensal() {
-
- return 15f;
-
- }
-
-
- }
+}

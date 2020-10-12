@@ -60,7 +60,7 @@ public class Endereco
 		if (numero == 0)
 			throw new IllegalArgumentException("Numero endereco igual a zero.");
 		
-		this.numero = 0;
+		this.numero = numero;
 	}
 	
 	public String getCidade()

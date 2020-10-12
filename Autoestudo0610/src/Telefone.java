@@ -1,84 +1,75 @@
+
 //João Vitor de Oliveira, Natália Sens Weise, Paulo Rubens de Moraes Leme Júnior
 import java.time.LocalDate;
 
-
-
 public class Telefone {
 
+	private Cliente cliente;
+	private LocalDate dataInst;
 
-private Cliente cliente;
-private LocalDate dataInst;
+	private String numero;
 
- private String numero;
+	public Telefone(Cliente cliente, LocalDate data, String num) {
+		this.setCliente(cliente);
+		this.setDataInst(data);
 
+		this.setNumero(num);
 
- public Telefone(Cliente cliente, LocalDate data, String num) {
+	}
 
- this.setDataInst(data);
+	public void setCliente(Cliente cliente) throws IllegalArgumentException {
+		if (cliente == null)
+			throw new IllegalArgumentException("Cliente inválido");
 
- this.setNumero(num);
+		this.cliente = cliente;
+	}
 
- }
+	public Cliente getCliente() {
+		return this.cliente;
+	}
 
+	public LocalDate getDataInst() {
 
- public void setCliente(Cliente cliente) throws IllegalArgumentException
- {
-	 if (cliente == null)
-		 throw new IllegalArgumentException("Cliente inválido");
-	 
-	 this.cliente = cliente;
- }
- 
- 
- public Cliente getCliente()
- {
-	 return this.cliente;
- }
- 
- public LocalDate getDataInst() {
+		return dataInst;
 
- return dataInst;
+	}
 
- }
+	public void setDataInst(LocalDate dataInst) throws IllegalArgumentException {
+		if (dataInst == null)
+			throw new IllegalArgumentException("Data inválida.");
 
- public void setDataInst(LocalDate dataInst) throws IllegalArgumentException {
-	 if (dataInst == null)
-		 throw new IllegalArgumentException("Data inválida.");
-	 
- this.dataInst = dataInst;
+		this.dataInst = dataInst;
 
- }
+	}
 
- public String getNumero() {
+	public String getNumero() {
 
- return numero;
+		return numero;
 
- }
+	}
 
- public void setNumero(String numero) throws IllegalArgumentException {
- if (numero == null)
-	 throw new IllegalArgumentException("Número de telefone inválido.");
- 
- if (numero.length() == 10) {
+	public void setNumero(String numero) throws IllegalArgumentException {
+		if (numero == null)
+			throw new IllegalArgumentException("Número de telefone inválido.");
 
- this.numero = numero;
+		if (numero.length() == 10) {
 
- }
+			this.numero = numero;
 
- else {
+		}
 
- throw new IllegalArgumentException("O telefone deve ter 10 dígitos");
+		else {
 
- }
+			throw new IllegalArgumentException("O telefone deve ter 10 dígitos");
 
- }
+		}
 
+	}
 
- public float getCustoMensal() {
+	public float getCustoMensal() {
 
- return 0;
+		return 0;
 
- }
+	}
 
-
- }
+}

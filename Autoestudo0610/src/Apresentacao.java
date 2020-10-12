@@ -275,6 +275,7 @@ public class Apresentacao {
 								Cliente cliente = new Cliente();
 								cliente.setEndereco(endereco);
 								cliente.setUsuario(nomeUsuario);
+
 								
 								
 								if (comboBoxLinha.getSelectedItem().equals(opcoesLinha[0])) {

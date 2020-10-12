@@ -23,7 +23,7 @@ public class Comercial extends Telefone {
 
 	}
 
-	public void setServico(String servico) {
+	public void setServico(String servico) throws IllegalArgumentException {
 		if (servico.isEmpty()) {
 			throw new IllegalArgumentException("Informe um ramo de atividade");
 		}
@@ -55,6 +55,18 @@ public class Comercial extends Telefone {
 
 		return 37.5f;
 
+	}
+	
+	@Override
+	public String toString() {
+		Endereco endereco = getCliente().getEndereco();
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+		String str = "Linha Comercial\nNúmero de Telefone: " + getNumero() + "\nData de Instalação: " + 
+				getDataInst().format(formatter) + "\nRamo de atividade: " + getServico() + 
+				"\nCusto mensal: R$" + getCustoMensal() + "\nNome do usuário: " + getCliente().getUsuario() + "\nEndereço: " + 
+				endereco.getRua() + ", " + endereco.getNumero() + " - " +
+				endereco.getCidade() + ", " + endereco.getUf();
+		return str;
 	}
 
 }

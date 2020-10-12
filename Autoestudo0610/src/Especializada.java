@@ -22,7 +22,7 @@ public class Especializada extends Telefone {
 
 	}
 
-	public void setQtdOcor(int qtdOcor) {
+	public void setQtdOcor(int qtdOcor) throws IllegalArgumentException {
 		if (qtdOcor < 0) {
 			throw new IllegalArgumentException("Erro no valor inserido em quantidade de ocorrências");
 		}
@@ -72,8 +72,8 @@ public class Especializada extends Telefone {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 		String str = "Linha Especializada\nNúmero de Telefone: " + getNumero() + "\nData de Instalação: " + 
 				getDataInst().format(formatter) + "\nQuantidade de ocorrências: " + getQtdOcor() + 
-				"\nCusto mensal: R$" + getCustoMensal() + "\nNome do usuário: " + getCliente() + "\nEndereço: " + 
-				endereco.getRua() + ", " + endereco.getNumero() + "em " +
+				"\nCusto mensal: R$" + getCustoMensal() + "\nNome do usuário: " + getCliente().getUsuario() + "\nEndereço: " + 
+				endereco.getRua() + ", " + endereco.getNumero() + " - " +
 				endereco.getCidade() + ", " + endereco.getUf();
 		return str;
 	}
