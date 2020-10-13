@@ -340,7 +340,7 @@ public class Apresentacao {
 									
 								} catch (IllegalArgumentException e) {
 									if (e.getMessage().equals("For input string: \"\"")) {
-										JOptionPane.showMessageDialog(frame, "Algum campo está nulo");
+										JOptionPane.showMessageDialog(frame, "Algum campo está nulo ou inválido");
 									}
 									else {
 										JOptionPane.showMessageDialog(frame, e.getMessage());
