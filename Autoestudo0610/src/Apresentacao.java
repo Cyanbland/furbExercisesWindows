@@ -332,14 +332,19 @@ public class Apresentacao {
 											}
 
 										} catch (IllegalArgumentException e) {
-											//JOptionPane.showMessageDialog(frame, "Erro no valor inserido em quantidade de ocorrências");
-											JOptionPane.showMessageDialog(frame, e.getMessage());
+											JOptionPane.showMessageDialog(frame, "Erro no valor inserido em quantidade de ocorrências");
+											//JOptionPane.showMessageDialog(frame, e.getMessage());
 										}
 									}
 										
 									
-								} catch (Exception e) {
-									JOptionPane.showMessageDialog(frame, "Erro no número de telefone inserido");
+								} catch (IllegalArgumentException e) {
+									if (e.getMessage().equals("For input string: \"\"")) {
+										JOptionPane.showMessageDialog(frame, "Algum campo está nulo");
+									}
+									else {
+										JOptionPane.showMessageDialog(frame, e.getMessage());
+									}
 								}
 								
 								
