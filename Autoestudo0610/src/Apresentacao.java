@@ -1,5 +1,5 @@
 //João Vitor de Oliveira, Natália Sens Weise e Paulo Rubens de Moraes Leme Júnior
-
+//O AVA permitia o envio de apenas 6 arquivos e por isso enviei os 7 arquivos totais do projeto por email.
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -246,7 +246,7 @@ public class Apresentacao {
 						//Data validada
 						if (comboBoxLinha.getSelectedIndex() > -1) {
 							try {
-								//Tipo de linah validado
+								//Tipo de linha validado
 								DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 								String formattedData = tfDataInstalacao.getText() + "/" + tfDataInstalacao1.getText() + "/" + tfDataInstalacao2.getText();
 								LocalDate data = LocalDate.parse(formattedData, formatter);

@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-//João Vitor de Oliveira e Paulo Rubens de Moraes Leme Júnior
+//JoÃ£o Vitor de Oliveira e Paulo Rubens de Moraes Leme JÃºnior
 
 
 public class Selecao {
@@ -9,11 +9,10 @@ public class Selecao {
 	private int ranking;
 	private ArrayList<Jogador> jogadores = new ArrayList<>();
 	
-	public Selecao(String _nomeSelecao, String _nomeTreinador, int _ranking, ArrayList<Jogador> _jogadores) {
+	public Selecao(String _nomeSelecao, String _nomeTreinador, int _ranking) {
 		this.setNomeSelecao(_nomeSelecao);;
 		this.setNomeTreinador(_nomeTreinador);
 		this.setRanking(_ranking);
-		this.setJogadores(_jogadores);
 	}
 	
 	public Selecao() {}
@@ -41,8 +40,16 @@ public class Selecao {
 		return jogadores;
 	}
 
-	public void setJogadores(ArrayList<Jogador> jogadores) {
-		this.jogadores = jogadores;
+	public void addJogador(Jogador jogador) throws Exception
+	{
+		if (jogador == null)
+			throw new Exception("Jogador nulo");
+		
+		if (jogadores.size() > 12)
+			throw new Exception("Maximo de jogadores excedido");
+		
+		
+		this.jogadores.add(jogador);
 	}
 	
 	public float getIdadeMedia() {
@@ -58,10 +65,10 @@ public class Selecao {
 		return idadeMedia;
 	}
 	
-	public Jogador getJogadorMaisAlto(ArrayList<Jogador> jogadores) {
+	public Jogador getJogadorMaisAlto() {
 		Jogador jogadorMaior = null;
 
-		for (Jogador jogador : jogadores) {
+		for (Jogador jogador : this.getJogadores()) {
 			if ((jogadorMaior == null) || (jogadorMaior.getAltura() < jogador.getAltura())) {
 				jogadorMaior = jogador;
 			}
@@ -71,22 +78,22 @@ public class Selecao {
 
 	}
 
-	public ArrayList<Jogador> getQuantosAbaixo(ArrayList<Jogador> jogadores, int altura) {
-		ArrayList<Jogador> jogadoresAbaixo = new ArrayList<Jogador>();
+	public int getQuantosAbaixo(int altura) {
+		int count = 0;
 
-		for (Jogador jogador : jogadores) {
+		for (Jogador jogador : this.getJogadores()) {
 			if (jogador.getAltura() < altura)
-				jogadoresAbaixo.add(jogador);
+				count++;
 		}
 
-		return jogadoresAbaixo;
+		return count;
 
 	}
 
-	public ArrayList<Jogador> getJogadores(ArrayList<Jogador> jogadores, String posicao) {
+	public ArrayList<Jogador> getJogadores(String posicao) {
 		ArrayList<Jogador> jogadoresEmPosicao = new ArrayList<Jogador>();
 
-		for (Jogador jogador : jogadores) {
+		for (Jogador jogador : this.getJogadores()) {
 			if (jogador.getPosicao() == posicao) {
 				jogadoresEmPosicao.add(jogador);
 			}
