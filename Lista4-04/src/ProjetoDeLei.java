@@ -26,12 +26,12 @@ public class ProjetoDeLei
 	{
 		String msg = "";
 		if (this.getDataAprovacao() == null)
-			msg = "--------------- \nTitulo: " + this.getTitulo() + 
-			"\nDataApresentacao: " + this.getDataApresentacao().toString() + 
-			"\nData Aprovacao: Não aprovado ainda." + 
+			msg = "\n--------------- \nTítulo: " + this.getTitulo() + 
+			"\nData Apresentacão: " + this.getDataApresentacao().toString() + 
+			"\nData Aprovação: Não aprovado ainda." + 
 			"\nNúmero Projeto: " + String.valueOf(this.getNumeroProjeto());
 		else
-			msg = "--------------- \nTítulo: " + this.getTitulo() + 
+			msg = "\n--------------- \nTítulo: " + this.getTitulo() + 
 				"\nData Apresentacão: " + this.getDataApresentacao().toString() + 
 				"\nData Aprovação: " + this.getDataAprovacao().toString() + 
 				"\nNúmero Projeto: " + String.valueOf(this.getNumeroProjeto());

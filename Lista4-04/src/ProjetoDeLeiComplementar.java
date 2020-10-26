@@ -43,6 +43,6 @@ public class ProjetoDeLeiComplementar extends ProjetoDeLei{
 	
 	public String mostrar() {
 		return super.mostrar() + "\n ArtigoLO: "+this.getArtigoLO()+
-				"\n Votos Favoráveis: "+this.getQtdVotosFavoraveis();
+				"\n Votos Favoráveis: "+this.getQtdVotosFavoraveis() + "\n---------------";
 	}
 }

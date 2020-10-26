@@ -275,11 +275,11 @@ public class Apresentacao extends javax.swing.JFrame {
 				if (camara.getPartidos().size() > 0 && numVereadores > 0) {
 					for (Partido part : camara.getPartidos()) {
 						for(Vereador vereador : part.getVereadores()) {
-							msg += "Nome do Vereador: " + vereador.getNome() + "\nPartido: " + vereador.getPartido().getNome() +
-									"\nDesempenho: " + vereador.getDesempenho();
+							msg += "\n---------------\nNome do Vereador: " + vereador.getNome() + "\nPartido: " + vereador.getPartido().getNome() +
+									"\nDesempenho: " + vereador.getDesempenho() + "\n";
 							
 							for (ProjetoDeLei proj : vereador.getProjetosDeLei()) {
-								msg += "\n" + proj.mostrar();
+								msg += proj.mostrar();
 							}
 						}
 					}
